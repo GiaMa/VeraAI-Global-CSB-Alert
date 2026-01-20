@@ -230,8 +230,7 @@ vera-ai-monitoring/
 │   └── ALERTS.md                 # Alert system documentation
 │
 ├── manuscripts/                  # Academic papers
-│   ├── CCR_scaling_detection.docx
-│   └── PAPERS.md                 # Paper summaries and cross-references
+│   └── PAPERS.md                 # Related publications and references
 │
 ├── R/                            # Analysis code
 │   ├── main_pipeline.R           # Main orchestration script
@@ -264,12 +263,8 @@ vera-ai-monitoring/
 
 ## Citation
 
-If using this repository, please cite:
+If using this repository, please cite the CooRnet package:
 
-**CCR Paper (Scaling Methodology)**:
-> [Authors]. (2025). Scaling Coordinated Behavior Detection. *Computational Communication Research*.
-
-**CooRnet Package**:
 > Giglietto, F., Righetti, N., Rossi, L., & Marino, G. (2020). It takes a village to manipulate the media: coordinated link sharing behavior during 2018 and 2019 Italian elections. *Information, Communication & Society*, 23(6), 867-891.
 
 ---
