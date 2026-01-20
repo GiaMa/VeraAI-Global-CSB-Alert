@@ -1,0 +1,49 @@
+# R specific
+.Rhistory
+.Rdata
+.RData
+.Ruserdata
+.Rproj.user/
+*.Rproj.user
+
+# Credentials and configuration (keep templates, ignore actual configs)
+config/config.R
+config/credentials.R
+.Renviron
+.env
+
+# API keys and secrets
+**/api_keys*
+**/secrets*
+**/credentials*
+
+# Large data files (store on external repository)
+*.csv.gz
+*.rds
+*.RDS
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Log files
+*.log
+log.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Original files (after reorganization)
+vera-alert.code/
+*.csv
+!data/**/*.csv
+
+# Plan file (development only)
+PLAN.md
