@@ -263,7 +263,9 @@ vera-ai-monitoring/
 
 ## Citation
 
-If using this repository, please cite the CooRnet package:
+If using this repository, please cite:
+
+> Giglietto, F., Marino, G., Mincigrucci, R., & Stanziano, A. (2023). A Workflow to Detect, Monitor, and Update Lists of Coordinated Social Media Accounts Across Time: The Case of the 2022 Italian Election. *Social Media + Society*, 9(3). https://doi.org/10.1177/20563051231196866
 
 > Giglietto, F., Righetti, N., Rossi, L., & Marino, G. (2020). It takes a village to manipulate the media: coordinated link sharing behavior during 2018 and 2019 Italian elections. *Information, Communication & Society*, 23(6), 867-891.
 
