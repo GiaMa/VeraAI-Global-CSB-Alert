@@ -8,8 +8,6 @@ This directory contains all datasets produced by the VERA-AI coordinated behavio
 data/
 ├── README.md                    # This file
 ├── processed/                   # Cleaned, analyzed datasets
-│   ├── facebook_network_nodes.csv
-│   ├── community_labels.csv
 │   └── community_engagement_classified.csv
 ├── alerts/                      # Alert system outputs
 │   └── veraai_alerts_links.csv
@@ -20,72 +18,12 @@ data/
 
 | Dataset | Location | Rows | Size | Description |
 |---------|----------|------|------|-------------|
-| Network Nodes | `processed/facebook_network_nodes.csv` | 14,832 | 1.1 MB | Account network membership |
-| Community Labels | `processed/community_labels.csv` | 208 | 13 KB | Cluster descriptions |
 | Community Engagement | `processed/community_engagement_classified.csv` | 208 | 934 KB | Processed dataset with Claude LLM classifications |
 | Alert Links | `alerts/veraai_alerts_links.csv` | 14,244 | 24 MB | Original alert dataset (raw) |
 
 ---
 
 ## Data Dictionary
-
-### facebook_network_nodes.csv
-
-**Description**: Maps Facebook accounts to their assigned network communities based on detected coordination patterns. Generated through Louvain community detection on the projected coordination network.
-
-**Primary key**: `id`
-
-| Column | Type | Description | Example | Notes |
-|--------|------|-------------|---------|-------|
-| `id` | string | CrowdTangle account identifier | `"303794233506"` | Unique per account |
-| `name` | string | Account display name | `"News Page Example"` | May change over time |
-| `community` | integer | Louvain community assignment | `1` | Arbitrary integer; same value = same cluster |
-| `degree` | integer | Network connectivity (edge count) | `23` | Higher = more coordination connections |
-
-**Relationships**:
-- `community` → `community_labels.community_id`
-- `community` → `community_engagement_classified.community_id`
-
-**Sample data**:
-```csv
-id,name,community,degree
-303794233506,News Page Example,1,23
-2214398435317853,Political Group,1,18
-1401409376737982,Entertainment Hub,2,7
-```
-
----
-
-### community_labels.csv
-
-**Description**: Human-readable descriptions of each detected community cluster. Labels generated via GPT-4 analysis of account characteristics, content themes, and coordination patterns within each cluster.
-
-**Primary key**: `community_id`
-
-| Column | Type | Description | Example | Notes |
-|--------|------|-------------|---------|-------|
-| `community_id` | integer | Community identifier | `1` | Matches `community` in nodes file |
-| `size` | integer | Number of accounts in community | `150` | Account count |
-| `label` | string | GPT-4 generated description | `"Pro-AMLO Mexican political supporters"` | AI-generated; verify manually |
-
-**Label categories observed**:
-
-| Category | Example Labels |
-|----------|---------------|
-| Political | "Pro-Putin Russian groups", "Pro-AMLO Mexican supporters" |
-| Geographic | "African entertainment/news communities", "Southeast Asian pages" |
-| Thematic | "Online gambling promotion", "Cryptocurrency trading" |
-| Language/cultural | "Spanish-language Latin American pages" |
-
-**Sample data**:
-```csv
-community_id,size,label
-1,150,Pro-Putin Russian propaganda network
-2,260,Online gambling promotion groups
-3,45,African entertainment communities
-```
-
----
 
 ### community_engagement_classified.csv
 

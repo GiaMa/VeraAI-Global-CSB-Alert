@@ -6,65 +6,10 @@ This document describes the datasets produced by the VERA-AI monitoring system a
 
 | Dataset | Location | Rows | Size | Description |
 |---------|----------|------|------|-------------|
-| Network Nodes | `data/processed/facebook_network_nodes.csv` | 14,832 | 1.1 MB | Account network membership |
-| Community Labels | `data/processed/community_labels.csv` | 208 | 13 KB | Cluster descriptions |
 | Community Engagement | `data/processed/community_engagement_classified.csv` | 208 | 934 KB | Processed dataset with Claude LLM classifications |
 | Alert Links | `data/alerts/veraai_alerts_links.csv` | 14,244 | 24 MB | Original alert dataset (raw) |
 
 ## Dataset Descriptions
-
-### facebook_network_nodes.csv
-
-**Purpose**: Maps Facebook accounts to their assigned network communities based on coordination patterns.
-
-**Provenance**: Generated from Louvain clustering on coordination network derived from CLSB, CMSB, and CITSB detection.
-
-**Schema**:
-
-| Column | Type | Description | Example |
-|--------|------|-------------|---------|
-| `id` | string | CrowdTangle account identifier | `"123456789"` |
-| `name` | string | Account display name | `"Example Page"` |
-| `community` | integer | Louvain community assignment | `1` |
-| `degree` | integer | Network connectivity (edge count) | `15` |
-
-**Usage notes**:
-- `community` values are arbitrary integers; same value = same cluster
-- Higher `degree` indicates more coordination connections
-- Names may have changed since data collection
-
-**Sample**:
-```csv
-id,name,community,degree
-303794233506,News Page Example,1,23
-2214398435317853,Political Group,1,18
-1401409376737982,Entertainment Hub,2,7
-```
-
-### community_labels.csv
-
-**Purpose**: Provides human-readable descriptions of each community cluster.
-
-**Provenance**: Generated via GPT-4 analysis of account characteristics within each cluster.
-
-**Schema**:
-
-| Column | Type | Description | Example |
-|--------|------|-------------|---------|
-| `community_id` | integer | Matches `community` in nodes file | `1` |
-| `size` | integer | Number of accounts in community | `150` |
-| `label` | string | GPT-4 generated description | `"Pro-AMLO Mexican political supporters"` |
-
-**Label categories observed**:
-- Political affiliations (e.g., "Pro-Putin Russian groups")
-- Geographic focus (e.g., "African entertainment/news communities")
-- Thematic content (e.g., "Online gambling promotion")
-- Language/cultural (e.g., "Spanish-language Latin American pages")
-
-**Interpretation guidance**:
-- Labels are AI-generated and should be verified through manual review
-- Size indicates cluster significance; larger clusters warrant more attention
-- Some labels may be generic if cluster content is diverse
 
 ### community_engagement_classified.csv
 

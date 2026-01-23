@@ -148,8 +148,6 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 
 | File | Description | Rows |
 |------|-------------|------|
-| `data/processed/facebook_network_nodes.csv` | Network membership and connectivity | 14,832 |
-| `data/processed/community_labels.csv` | GPT-4 generated cluster descriptions | 208 |
 | `data/processed/community_engagement_classified.csv` | Processed dataset with engagement metrics and Claude LLM-derived classifications (geography, focus) | 208 |
 | `data/alerts/veraai_alerts_links.csv` | Original alert dataset - raw output from the monitoring workflow | 14,244 |
 
