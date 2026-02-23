@@ -153,12 +153,6 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 
 The classified dataset includes two LLM-derived dimensions for each detected community: **geographic region** (9 categories: North America, Latin America, Europe, Eastern Europe/Russia, Africa, South Asia, Southeast Asia, Asia-Pacific, Other/Mixed) and **operational focus** (11 categories: political movements, online gambling, news/media, entertainment, local community groups, religious, e-commerce, cryptocurrency, diaspora, pet communities, other).
 
-![Region Distribution](analysis/figures/figure_04_region_distribution.png)
-
-![Focus Distribution](analysis/figures/figure_05_focus_distribution.png)
-
-![Region Focus Heatmap](analysis/figures/figure_06_region_focus_heatmap.png)
-
 ### Preliminary Analyses
 
 The monitoring system identified **17 distinct networks** pursuing varied operational objectives:
