@@ -76,10 +76,10 @@ Seed Lists (known problematic accounts)
          │
          ▼
 ┌─────────────────────────────┐
-│   Alert Generation         │
-│   • Slack notifications    │
-│   • Google Sheets logging  │
-│   • Network visualizations │
+│   Alert Generation          │
+│   • Slack notifications     │
+│   • Google Sheets logging   │
+│   • Network visualizations  │
 └─────────────────────────────┘
          │
          ▼
@@ -123,7 +123,7 @@ Seed Lists (known problematic accounts)
 
 ### Known Limitations
 
-- CrowdTangle API was deprecated in August 2024; system now uses Meta Content Library
+- CrowdTangle API was deprecated in August 2024
 - Rate limiting constraints on API queries
 - GPT-4 labeling incurs API costs
 - Network analysis memory requirements scale with dataset size
@@ -140,19 +140,6 @@ Seed Lists (known problematic accounts)
 | [data/alerts/veraai_alerts_links.csv](data/alerts/veraai_alerts_links.csv) | Original alert dataset - raw output from the monitoring workflow | 14,244 |
 
 The classified dataset includes two LLM-derived dimensions for each detected community: **geographic region** (9 categories: North America, Latin America, Europe, Eastern Europe/Russia, Africa, South Asia, Southeast Asia, Asia-Pacific, Other/Mixed) and **operational focus** (11 categories: political movements, online gambling, news/media, entertainment, local community groups, religious, e-commerce, cryptocurrency, diaspora, pet communities, other).
-
-### Preliminary Analyses
-
-The monitoring system identified **17 distinct networks** pursuing varied operational objectives:
-
-- **Pro-Putin propaganda**: 27 coordinated groups with synchronized posting
-- **Online gambling promotion**: 260 groups using AI-generated content and bot engagement
-- **Unmoderated spam networks**: 222 groups exploiting poor moderation for explicit content
-
-Key findings include:
-- Coordinated posts achieving over 1 million views
-- AI-generated imagery used for engagement bait
-- Strategic group renaming to evade detection
 
 ---
 
