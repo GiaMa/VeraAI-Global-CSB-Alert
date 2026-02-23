@@ -43,7 +43,7 @@ See [manuscripts/PAPERS.md](manuscripts/PAPERS.md) for detailed paper summaries.
 | Audience | Start Here |
 |----------|------------|
 | **Researchers** | [manuscripts/PAPERS.md](manuscripts/PAPERS.md) - Academic papers and theoretical framework |
-| **Developers** | [R/README.md](R/README.md) - Code documentation and execution guide |
+| **Developers** | [Replicating the Workflow](#replicating-the-workflow) → [R/README.md](R/README.md) - Script map and execution guide |
 | **Policy Analysts** | [docs/WORKFLOW.md](docs/WORKFLOW.md) - Conceptual workflow explanation |
 | **Data Users** | [data/README.md](data/README.md) - Dataset descriptions and data dictionary |
 | **Classification Data** | [data/processed/community_engagement_classified.csv](data/processed/community_engagement_classified.csv) - 208 communities with geographical and topic labels |
@@ -215,6 +215,44 @@ Key findings include:
 - Strategic group renaming to evade detection
 
 See [docs/ALERTS.md](docs/ALERTS.md) for alert interpretation guidance.
+
+---
+
+## Replicating the Workflow
+
+The full monitoring cycle is implemented across the following scripts. Each maps to one or more steps of the 9-step workflow:
+
+| Workflow Step | Script | Role |
+|---------------|--------|------|
+| 1. Configure & authenticate | `config/config_template.R` → `config/config.R` | API credentials and parameters |
+| 2. Retrieve overperforming posts (seed accounts) | `R/main_pipeline.R` (lines 140–253) | CrowdTangle list queries via `R/api/crowdtangle_query.R` |
+| 3. Retrieve posts from discovered coordinated accounts | `R/main_pipeline.R` (lines 140–253) | Same query logic, expanded pool |
+| 4. Alert generation | `R/main_pipeline.R` (lines 255–446) | Slack + Google Sheets notifications |
+| 5. CLSB detection | `R/main_pipeline.R` (lines 448–715) | Uses the external [CooRnet](https://github.com/fabiogiglietto/CooRnet) package |
+| 6. CMSB detection | `R/coordination_detection/detect_CMSB.R` | Text-similarity coordination detection |
+| 7. CITSB detection | `R/coordination_detection/detect_CITSB.R` | Image-text coordination detection |
+| 8. URL processing (used throughout) | `R/utils/clean_urls.R` | URL normalization before analysis |
+| 9. Threshold calculation (used throughout) | `R/utils/get_threshold.R` | Dynamic engagement threshold |
+| 10. Network labeling | `R/api/gpt4_labeling.R` | GPT-4 cluster labels |
+| 11. Update monitoring pool | `R/main_pipeline.R` (lines 749–873) | Adds newly discovered accounts |
+
+**The single entry point for the full cycle is `R/main_pipeline.R`**, which calls all other scripts in order. The detection modules and utilities are designed to be sourced independently for testing or adaptation.
+
+### Script Dependency Map
+
+```
+R/main_pipeline.R          ← run this to execute the full cycle
+├── config/config.R        ← credentials and parameters
+├── R/api/crowdtangle_query.R
+├── R/utils/clean_urls.R
+├── R/utils/get_threshold.R
+├── R/coordination_detection/detect_CMSB.R
+├── R/coordination_detection/detect_CITSB.R
+├── R/api/gpt4_labeling.R
+└── [CooRnet package]      ← install from GitHub (see below)
+```
+
+For detailed function signatures and parameter descriptions, see [R/README.md](R/README.md).
 
 ---
 
