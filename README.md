@@ -36,22 +36,16 @@ This system was developed as part of a research project examining deceptive info
 
 The workflow has been used to detect operations including pro-Putin propaganda networks, online gambling promotion schemes, and unmoderated groups flooded with explicit content.
 
-See [manuscripts/PAPERS.md](manuscripts/PAPERS.md) for detailed paper summaries.
-
 ### Quick Navigation
 
 | Audience | Start Here |
 |----------|------------|
-| **Researchers** | [manuscripts/PAPERS.md](manuscripts/PAPERS.md) - Academic papers and theoretical framework |
 | **Developers** | [R/README.md](R/README.md) - Code documentation and execution guide |
-| **Policy Analysts** | [docs/WORKFLOW.md](docs/WORKFLOW.md) - Conceptual workflow explanation |
 | **Data Users** | [data/README.md](data/README.md) - Dataset descriptions and data dictionary |
 
 ---
 
 ## Workflow
-
-*Detailed documentation: [docs/WORKFLOW.md](docs/WORKFLOW.md)*
 
 ### Monitoring Logic
 
@@ -102,13 +96,9 @@ Seed Lists (known problematic accounts)
 | Edge weight percentile | 95th | Threshold for identifying highly coordinated accounts |
 | Minimum interactions | Dynamic | Calculated based on historical engagement patterns |
 
-See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
-
 ---
 
 ## Implementation
-
-*Detailed documentation: [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md)*
 
 ### System Architecture
 
@@ -142,8 +132,6 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 
 ## Outputs & Analyses
 
-*Detailed documentation: [docs/OUTPUTS.md](docs/OUTPUTS.md)*
-
 ### Datasets
 
 | File | Description | Rows |
@@ -165,8 +153,6 @@ Key findings include:
 - Coordinated posts achieving over 1 million views
 - AI-generated imagery used for engagement bait
 - Strategic group renaming to evade detection
-
-See [docs/ALERTS.md](docs/ALERTS.md) for alert interpretation guidance.
 
 ---
 
@@ -221,16 +207,6 @@ For scheduled execution, configure a cron job to run the pipeline every 6 hours.
 vera-ai-monitoring/
 ├── README.md                     # This file
 ├── .gitignore                    # Git ignore rules
-│
-├── docs/                         # Documentation
-│   ├── WORKFLOW.md               # Conceptual workflow explanation
-│   ├── IMPLEMENTATION.md         # Technical architecture details
-│   ├── OUTPUTS.md                # Dataset and analysis guide
-│   ├── DEFINITIONS.md            # Key terminology
-│   └── ALERTS.md                 # Alert system documentation
-│
-├── manuscripts/                  # Academic papers
-│   └── PAPERS.md                 # Related publications and references
 │
 ├── R/                            # Analysis code
 │   ├── main_pipeline.R           # Main orchestration script
