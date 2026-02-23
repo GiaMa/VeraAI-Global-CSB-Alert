@@ -34,8 +34,7 @@ This repository documents the VERA-AI monitoring system, which:
 
 This system was developed as part of a research project examining deceptive information operations on Facebook. The theoretical framework integrates:
 
-- **Strategic information operations** (Starbird et al., 2019): Understanding how malicious actors exploit platform affordances
-- **Deception theory** (Chadwick & Stanyer, 2022): Analyzing communicative acts designed to mislead
+The workflow implements a persistent, automated CSB monitoring system as advocated by Schroeder et al. (2026) for detecting, for example, AI-powered coordinated networks, which adapt their behaviour in real time and render retrospective detection insufficient.
 
 The workflow has been used to detect operations including pro-Putin propaganda networks, online gambling promotion schemes, and unmoderated groups flooded with explicit content.
 
@@ -230,6 +229,8 @@ If using this repository, please cite:
 > Giglietto, F., Marino, G., Mincigrucci, R., & Stanziano, A. (2023). A Workflow to Detect, Monitor, and Update Lists of Coordinated Social Media Accounts Across Time: The Case of the 2022 Italian Election. *Social Media + Society*, 9(3). https://doi.org/10.1177/20563051231196866
 
 > Giglietto, F., Righetti, N., Rossi, L., & Marino, G. (2020). It takes a village to manipulate the media: coordinated link sharing behavior during 2018 and 2019 Italian elections. *Information, Communication & Society*, 23(6), 867-891.
+
+> Schroeder, D. T., Cha, M., Baronchelli, A., Bostrom, N., Christakis, N. A., Garcia, D., Goldenberg, A., Kyrychenko, Y., Leyton-Brown, K., Lutz, N., Marcus, G., Menczer, F., Pennycook, G., Rand, D. G., Ressa, M., Schweitzer, F., Song, D., Summerfield, C., Tang, A., … Kunst, J. R. (2026). How malicious AI swarms can threaten democracy. *Science (New York, N.Y.)*, 391(6783), 354–357. https://doi.org/10.1126/science.adz1697
 
 ---
 
