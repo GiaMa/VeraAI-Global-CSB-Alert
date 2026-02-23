@@ -32,11 +32,7 @@ This repository documents the VERA-AI monitoring system, which:
 
 ### Research Context
 
-This system was developed as part of a research project examining deceptive information operations on Facebook. The theoretical framework integrates:
-
-The workflow implements a persistent, automated CSB monitoring system as advocated by Schroeder et al. (2026) for detecting, for example, AI-powered coordinated networks, which adapt their behaviour in real time and render retrospective detection insufficient.
-
-The workflow has been used to detect operations including pro-Putin propaganda networks, online gambling promotion schemes, and unmoderated groups flooded with explicit content.
+This system was developed as part of vera.ai (https://www.veraai.eu/), a Horizon Europe research project developing AI tools for fighting disinformation online. It implements a persistent, automated CSB monitoring system as advocated by Schroeder et al. (2026) for detecting, for example, AI-powered coordinated networks, which adapt their behaviour in real time and render retrospective detection insufficient. The workflow has been used to detect multiple types of deceptive information operations including pro-Putin propaganda networks, online gambling promotion schemes, and unmoderated groups flooded with explicit content.
 
 ### Quick Navigation
 
