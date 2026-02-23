@@ -43,10 +43,9 @@ See [manuscripts/PAPERS.md](manuscripts/PAPERS.md) for detailed paper summaries.
 | Audience | Start Here |
 |----------|------------|
 | **Researchers** | [manuscripts/PAPERS.md](manuscripts/PAPERS.md) - Academic papers and theoretical framework |
-| **Developers** | [Replicating the Workflow](#replicating-the-workflow) → [R/README.md](R/README.md) - Script map and execution guide |
+| **Developers** | [R/README.md](R/README.md) - Code documentation and execution guide |
 | **Policy Analysts** | [docs/WORKFLOW.md](docs/WORKFLOW.md) - Conceptual workflow explanation |
 | **Data Users** | [data/README.md](data/README.md) - Dataset descriptions and data dictionary |
-| **Classification Data** | [data/processed/community_engagement_classified.csv](data/processed/community_engagement_classified.csv) - 208 communities with geographical and topic labels |
 
 ---
 
@@ -115,15 +114,14 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 
 | Component | Script | Function |
 |-----------|--------|----------|
-| Orchestration | `R/main_pipeline.R` | Main entry point; coordinates all subsystems |
+| Orchestration | [R/main_pipeline.R](R/main_pipeline.R) | Main entry point; coordinates all subsystems |
 | CLSB Detection | CooRnet package | Coordinated Link Sharing Behavior detection |
-| CMSB Detection | `R/coordination_detection/detect_CMSB.R` | Coordinated Message Sharing Behavior |
-| CITSB Detection | `R/coordination_detection/detect_CITSB.R` | Coordinated Image-Text Sharing Behavior |
-| API Queries | `R/api/crowdtangle_query.R` | CrowdTangle API wrapper with rate limiting |
-| Network Labeling | `R/api/gpt4_labeling.R` | GPT-4 integration for cluster descriptions |
-| Threshold Calculation | `R/utils/get_threshold.R` | Dynamic engagement threshold computation |
-| URL Processing | `R/utils/clean_urls.R` | URL sanitization and normalization |
-| Validation Tests | `R/validation/validation_tests.R` | Statistical validation for Section 4 of the manuscript (chi-squared, ANOVA, Kruskal-Wallis) |
+| CMSB Detection | [R/coordination_detection/detect_CMSB.R](R/coordination_detection/detect_CMSB.R) | Coordinated Message Sharing Behavior |
+| CITSB Detection | [R/coordination_detection/detect_CITSB.R](R/coordination_detection/detect_CITSB.R) | Coordinated Image-Text Sharing Behavior |
+| API Queries | [R/api/crowdtangle_query.R](R/api/crowdtangle_query.R) | CrowdTangle API wrapper with rate limiting |
+| Network Labeling | [R/api/gpt4_labeling.R](R/api/gpt4_labeling.R) | GPT-4 integration for cluster descriptions |
+| Threshold Calculation | [R/utils/get_threshold.R](R/utils/get_threshold.R) | Dynamic engagement threshold computation |
+| URL Processing | [R/utils/clean_urls.R](R/utils/clean_urls.R) | URL sanitization and normalization |
 
 ### External Dependencies
 
@@ -150,56 +148,16 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 
 | File | Description | Rows |
 |------|-------------|------|
-| `data/processed/community_engagement_classified.csv` | Processed dataset with engagement metrics and Claude LLM-derived classifications (geography, focus) | 208 |
-| `data/alerts/veraai_alerts_links.csv` | Original alert dataset - raw output from the monitoring workflow | 14,244 |
+| [data/processed/community_engagement_classified.csv](data/processed/community_engagement_classified.csv) | Processed dataset with engagement metrics and LLM-derived classifications (geography, focus) | 208 |
+| [data/alerts/veraai_alerts_links.csv](data/alerts/veraai_alerts_links.csv) | Original alert dataset - raw output from the monitoring workflow | 14,244 |
 
-### Geographical & Topic Classification
-
-Each detected community in `community_engagement_classified.csv` carries two LLM-derived classification dimensions (using Claude API):
-
-**9 Geographic Regions:**
-
-| Region | Description |
-|--------|-------------|
-| North America | USA, Canada, Mexico |
-| Latin America | Central and South America |
-| Europe | Western and Northern Europe |
-| Eastern Europe/Russia | Eastern Europe and Russian-sphere actors |
-| Africa | Sub-Saharan and North Africa |
-| South Asia | India, Pakistan, Bangladesh, and neighbors |
-| Southeast Asia | ASEAN region countries |
-| Asia-Pacific | East Asia, Oceania, and broader Pacific |
-| Other/Mixed | Multi-regional or unclassifiable communities |
-
-**11 Operational Focus Categories:**
-
-| Focus | Description |
-|-------|-------------|
-| Political movements/activism | Partisan mobilization and political campaigns |
-| Online gambling/betting | Casino, sports betting, and sweepstakes promotion |
-| News/Media | Information outlets and news dissemination |
-| Entertainment/Fan communities | Celebrity, sports, and pop-culture fan groups |
-| Local community groups | Neighborhood, city, or regional interest groups |
-| Religious/Faith-based | Religious communities and faith-driven content |
-| E-commerce/Marketplace | Buy/sell/trade groups and commercial promotion |
-| Cryptocurrency | Crypto investment, NFTs, and blockchain content |
-| Diaspora/Migration | Migrant communities and cross-border connections |
-| Pet communities | Animal care, adoption, and enthusiast groups |
-| Other/Mixed | Communities with mixed or unclassifiable focus |
-
-#### Region Distribution
+The classified dataset includes two LLM-derived dimensions for each detected community: **geographic region** (9 categories: North America, Latin America, Europe, Eastern Europe/Russia, Africa, South Asia, Southeast Asia, Asia-Pacific, Other/Mixed) and **operational focus** (11 categories: political movements, online gambling, news/media, entertainment, local community groups, religious, e-commerce, cryptocurrency, diaspora, pet communities, other).
 
 ![Region Distribution](analysis/figures/figure_04_region_distribution.png)
 
-#### Topic Focus Distribution
-
 ![Focus Distribution](analysis/figures/figure_05_focus_distribution.png)
 
-#### Region × Topic Focus Heatmap
-
 ![Region Focus Heatmap](analysis/figures/figure_06_region_focus_heatmap.png)
-
----
 
 ### Preliminary Analyses
 
@@ -215,44 +173,6 @@ Key findings include:
 - Strategic group renaming to evade detection
 
 See [docs/ALERTS.md](docs/ALERTS.md) for alert interpretation guidance.
-
----
-
-## Replicating the Workflow
-
-The full monitoring cycle is implemented across the following scripts. Each maps to one or more steps of the 9-step workflow:
-
-| Workflow Step | Script | Role |
-|---------------|--------|------|
-| 1. Configure & authenticate | `config/config_template.R` → `config/config.R` | API credentials and parameters |
-| 2. Retrieve overperforming posts (seed accounts) | `R/main_pipeline.R` (lines 140–253) | CrowdTangle list queries via `R/api/crowdtangle_query.R` |
-| 3. Retrieve posts from discovered coordinated accounts | `R/main_pipeline.R` (lines 140–253) | Same query logic, expanded pool |
-| 4. Alert generation | `R/main_pipeline.R` (lines 255–446) | Slack + Google Sheets notifications |
-| 5. CLSB detection | `R/main_pipeline.R` (lines 448–715) | Uses the external [CooRnet](https://github.com/fabiogiglietto/CooRnet) package |
-| 6. CMSB detection | `R/coordination_detection/detect_CMSB.R` | Text-similarity coordination detection |
-| 7. CITSB detection | `R/coordination_detection/detect_CITSB.R` | Image-text coordination detection |
-| 8. URL processing (used throughout) | `R/utils/clean_urls.R` | URL normalization before analysis |
-| 9. Threshold calculation (used throughout) | `R/utils/get_threshold.R` | Dynamic engagement threshold |
-| 10. Network labeling | `R/api/gpt4_labeling.R` | GPT-4 cluster labels |
-| 11. Update monitoring pool | `R/main_pipeline.R` (lines 749–873) | Adds newly discovered accounts |
-
-**The single entry point for the full cycle is `R/main_pipeline.R`**, which calls all other scripts in order. The detection modules and utilities are designed to be sourced independently for testing or adaptation.
-
-### Script Dependency Map
-
-```
-R/main_pipeline.R          ← run this to execute the full cycle
-├── config/config.R        ← credentials and parameters
-├── R/api/crowdtangle_query.R
-├── R/utils/clean_urls.R
-├── R/utils/get_threshold.R
-├── R/coordination_detection/detect_CMSB.R
-├── R/coordination_detection/detect_CITSB.R
-├── R/api/gpt4_labeling.R
-└── [CooRnet package]      ← install from GitHub (see below)
-```
-
-For detailed function signatures and parameter descriptions, see [R/README.md](R/README.md).
 
 ---
 
@@ -328,26 +248,17 @@ vera-ai-monitoring/
 │   ├── api/                      # External service wrappers
 │   │   ├── crowdtangle_query.R
 │   │   └── gpt4_labeling.R
-│   ├── utils/                    # Utility functions
-│   │   ├── clean_urls.R
-│   │   └── get_threshold.R
-│   └── validation/               # Statistical validation scripts
-│       └── validation_tests.R    # Chi-squared, ANOVA, Kruskal-Wallis tests (manuscript Section 4)
+│   └── utils/                    # Utility functions
+│       ├── clean_urls.R
+│       └── get_threshold.R
 │
 ├── data/                         # Data assets
 │   ├── README.md                 # Data dictionary
 │   ├── processed/                # Analysis-ready datasets
-│   │   ├── community_engagement_classified.csv  # 208 communities with region & focus labels
-│   │   └── community_labels.csv                 # Raw LLM label outputs
 │   └── alerts/                   # Alert outputs
-│       └── veraai_alerts_links.csv              # 14,244 alert records
 │
 ├── analysis/                     # Preliminary analyses
-│   └── figures/                  # Visualizations (figures 04–15)
-│       ├── figure_04_region_distribution.png
-│       ├── figure_05_focus_distribution.png
-│       ├── figure_06_region_focus_heatmap.png
-│       └── ...                   # Engagement and cross-community figures
+│   └── figures/                  # Visualizations
 │
 └── config/                       # Configuration templates
     └── config_template.R
