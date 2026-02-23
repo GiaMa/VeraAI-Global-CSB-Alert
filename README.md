@@ -46,6 +46,7 @@ See [manuscripts/PAPERS.md](manuscripts/PAPERS.md) for detailed paper summaries.
 | **Developers** | [R/README.md](R/README.md) - Code documentation and execution guide |
 | **Policy Analysts** | [docs/WORKFLOW.md](docs/WORKFLOW.md) - Conceptual workflow explanation |
 | **Data Users** | [data/README.md](data/README.md) - Dataset descriptions and data dictionary |
+| **Classification Data** | [data/processed/community_engagement_classified.csv](data/processed/community_engagement_classified.csv) - 208 communities with geographical and topic labels |
 
 ---
 
@@ -122,6 +123,7 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 | Network Labeling | `R/api/gpt4_labeling.R` | GPT-4 integration for cluster descriptions |
 | Threshold Calculation | `R/utils/get_threshold.R` | Dynamic engagement threshold computation |
 | URL Processing | `R/utils/clean_urls.R` | URL sanitization and normalization |
+| Validation Tests | `R/validation/validation_tests.R` | Statistical validation for Section 4 of the manuscript (chi-squared, ANOVA, Kruskal-Wallis) |
 
 ### External Dependencies
 
@@ -150,6 +152,54 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 |------|-------------|------|
 | `data/processed/community_engagement_classified.csv` | Processed dataset with engagement metrics and Claude LLM-derived classifications (geography, focus) | 208 |
 | `data/alerts/veraai_alerts_links.csv` | Original alert dataset - raw output from the monitoring workflow | 14,244 |
+
+### Geographical & Topic Classification
+
+Each detected community in `community_engagement_classified.csv` carries two LLM-derived classification dimensions (using Claude API):
+
+**9 Geographic Regions:**
+
+| Region | Description |
+|--------|-------------|
+| North America | USA, Canada, Mexico |
+| Latin America | Central and South America |
+| Europe | Western and Northern Europe |
+| Eastern Europe/Russia | Eastern Europe and Russian-sphere actors |
+| Africa | Sub-Saharan and North Africa |
+| South Asia | India, Pakistan, Bangladesh, and neighbors |
+| Southeast Asia | ASEAN region countries |
+| Asia-Pacific | East Asia, Oceania, and broader Pacific |
+| Other/Mixed | Multi-regional or unclassifiable communities |
+
+**11 Operational Focus Categories:**
+
+| Focus | Description |
+|-------|-------------|
+| Political movements/activism | Partisan mobilization and political campaigns |
+| Online gambling/betting | Casino, sports betting, and sweepstakes promotion |
+| News/Media | Information outlets and news dissemination |
+| Entertainment/Fan communities | Celebrity, sports, and pop-culture fan groups |
+| Local community groups | Neighborhood, city, or regional interest groups |
+| Religious/Faith-based | Religious communities and faith-driven content |
+| E-commerce/Marketplace | Buy/sell/trade groups and commercial promotion |
+| Cryptocurrency | Crypto investment, NFTs, and blockchain content |
+| Diaspora/Migration | Migrant communities and cross-border connections |
+| Pet communities | Animal care, adoption, and enthusiast groups |
+| Other/Mixed | Communities with mixed or unclassifiable focus |
+
+#### Region Distribution
+
+![Region Distribution](analysis/figures/figure_04_region_distribution.png)
+
+#### Topic Focus Distribution
+
+![Focus Distribution](analysis/figures/figure_05_focus_distribution.png)
+
+#### Region × Topic Focus Heatmap
+
+![Region Focus Heatmap](analysis/figures/figure_06_region_focus_heatmap.png)
+
+---
 
 ### Preliminary Analyses
 
@@ -240,18 +290,26 @@ vera-ai-monitoring/
 │   ├── api/                      # External service wrappers
 │   │   ├── crowdtangle_query.R
 │   │   └── gpt4_labeling.R
-│   └── utils/                    # Utility functions
-│       ├── clean_urls.R
-│       └── get_threshold.R
+│   ├── utils/                    # Utility functions
+│   │   ├── clean_urls.R
+│   │   └── get_threshold.R
+│   └── validation/               # Statistical validation scripts
+│       └── validation_tests.R    # Chi-squared, ANOVA, Kruskal-Wallis tests (manuscript Section 4)
 │
 ├── data/                         # Data assets
 │   ├── README.md                 # Data dictionary
 │   ├── processed/                # Analysis-ready datasets
+│   │   ├── community_engagement_classified.csv  # 208 communities with region & focus labels
+│   │   └── community_labels.csv                 # Raw LLM label outputs
 │   └── alerts/                   # Alert outputs
+│       └── veraai_alerts_links.csv              # 14,244 alert records
 │
 ├── analysis/                     # Preliminary analyses
-│   ├── figures/                  # Visualizations
-│   └── notebooks/                # Analysis notebooks
+│   └── figures/                  # Visualizations (figures 04–15)
+│       ├── figure_04_region_distribution.png
+│       ├── figure_05_focus_distribution.png
+│       ├── figure_06_region_focus_heatmap.png
+│       └── ...                   # Engagement and cross-community figures
 │
 └── config/                       # Configuration templates
     └── config_template.R
