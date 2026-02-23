@@ -1,5 +1,8 @@
 # VERA-AI: Coordinated Behavior Monitoring System
 
+> [!WARNING]
+> **Deprecated:** This implementation relies on the CrowdTangle API, which was shut down in August 2024. The pipeline is no longer operational in its original form. For an active implementation of similar methodology on TikTok, see: https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html
+
 A quasi-real-time monitoring workflow for detecting coordinated information operations on Facebook. This system cyclically monitors lists of known problematic actors to surface popular and potentially harmful content through automated alerting.
 
 ## Table of Contents
@@ -233,15 +236,6 @@ If using this repository, please cite:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Implementation Status
-
-**Note:** This implementation is deprecated following the CrowdTangle API closure in August 2024.
-
-For an active implementation of similar coordinated behavior detection methodology on TikTok, see Fabio Giglietto's project:
-- **TikTok Coordinated Sharing Behavior Detection**: https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html
 
 ---
 
