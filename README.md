@@ -251,9 +251,6 @@ vera-ai-monitoring/
 │   ├── processed/                # Analysis-ready datasets
 │   └── alerts/                   # Alert outputs
 │
-├── analysis/                     # Preliminary analyses
-│   └── figures/                  # Visualizations
-│
 └── config/                       # Configuration templates
     └── config_template.R
 ```
