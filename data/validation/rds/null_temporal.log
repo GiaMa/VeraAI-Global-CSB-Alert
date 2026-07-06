@@ -1,0 +1,16 @@
+Observed: louvain_communities_gte5=23  louvain_modularity=0.668  clustering_coefficient=0.628  n_components_gte5=21  largest_component=883
+1000 permutations in 26.5 min
+                     metric    observed    null_mean      null_sd        p_ge
+                     <char>       <num>        <num>        <num>       <num>
+1: louvain_communities_gte5  23.0000000    3.5140000  0.500054051 0.000999001
+2:       louvain_modularity   0.6683091    0.4135919  0.002601644 0.000999001
+3:   clustering_coefficient   0.6278502    0.4430868  0.003697470 0.000999001
+4:        n_components_gte5  21.0000000    1.0000000  0.000000000 0.000999001
+5:        largest_component 883.0000000 2109.0680000 15.223571629 1.000000000
+          p_le n_permutations                    seed_rule
+         <num>          <int>                       <char>
+1: 1.000000000           1000 set.seed(31415 + perm_index)
+2: 1.000000000           1000 set.seed(31415 + perm_index)
+3: 1.000000000           1000 set.seed(31415 + perm_index)
+4: 1.000000000           1000 set.seed(31415 + perm_index)
+5: 0.000999001           1000 set.seed(31415 + perm_index)

@@ -259,9 +259,49 @@ vera-ai-monitoring/
 
 ---
 
+## Reproducing the working paper's results
+
+This repository is the companion to the working paper:
+
+> Giglietto, F., Marino, G., Chakraborty, A., & Righetti, N. (2026). *Ten
+> months of continuous coordinated-behaviour monitoring on Facebook: the
+> VERA-AI Alert system, its empirical yield, and what retrospective case
+> studies miss.* SocArXiv working paper. (DOI to be added on publication;
+> Zenodo archive of this repository: DOI to be added at release.)
+
+Every numeric claim in the paper traces to a script under
+`analysis/validation/` (seeds recorded in each script) reading the data in
+`data/`:
+
+| Paper claim | Value | Script |
+|---|---|---|
+| Graph construction (14,832 discovered accounts; 8,618 URLs) | `data/validation/graph_summary.csv` | `analysis/validation/00_build_graphs.R` |
+| Expansion dynamics; monthly promotion rate mean 11.1%, CV 0.10 | `expansion_dynamics.csv` | `01_expansion_dynamics.R` |
+| Bipartite null model (modularity 0.668 vs 0.067; p ≤ 0.001 on 4/5 metrics; 1,000 Curveball permutations) | `null_model_pvalues.csv` | `02_null_model_bipartite.R` + `curveball.cpp` |
+| Temporal (weekly-stratified) null | `null_model_temporal.csv` | `03_null_model_temporal.R` |
+| Threshold sensitivity (2,438 promoted at 90th pct of 24,200) | `threshold_sensitivity.csv` | `04_threshold_sensitivity.R` |
+| Rogers & Righetti strict replication (631 nodes / 9,732 edges / 19 communities → 15 catalogue communities) | `rr_strict_replication.csv`, `rr_strict_communities.csv` | `05_rr_strict_replication.R` |
+| Engagement signatures (KW ε² 0.12–0.15; cosine permutation p ≤ 0.001, N = 204) | `engagement_signature.csv` | `06_engagement_signature.R` |
+| All figures | `analysis/figures/*.pdf` | `07_figures.R` |
+| Account-list repair of the community dataset | in-place fix of `community_engagement_classified.csv` | `08_repair_account_lists.R` |
+
+Dependencies: R ≥ 4.5 with `data.table`, `igraph`, `tidytable`, `ggplot2`
+(plus a C++ compiler for the Curveball permutation kernel via `Rcpp`).
+Typical runtimes: null models ~50 and ~27 minutes on 2 cores; everything
+else under a minute. Live-pipeline dependencies (CrowdTangle, Slack,
+Google, OpenAI APIs) are **not** required to reproduce the analyses.
+
+**Data policy.** `data/processed/community_engagement_classified.csv`
+(207 communities, aggregate) and `data/alerts/veraai_alerts_links.csv`
+(10,681 URL-level alert records) are included. The account-level watched
+list and the live discovery queue are not shared; the paper documents the
+schema and the promotion rule so the pipeline can be re-deployed on other
+data.
+
 ## Citation
 
-If using this repository, please cite:
+To cite the system and its empirical yield, cite the working paper above
+(see also `CITATION.cff`). The upstream detection methodology:
 
 > Giglietto, F., Marino, G., Mincigrucci, R., & Stanziano, A. (2023). A Workflow to Detect, Monitor, and Update Lists of Coordinated Social Media Accounts Across Time: The Case of the 2022 Italian Election. *Social Media + Society*, 9(3). https://doi.org/10.1177/20563051231196866
 

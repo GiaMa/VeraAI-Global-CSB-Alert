@@ -1,0 +1,7 @@
+population,n,note
+coordinated (coo_r_account_url),14832,nodes of co-sharing graph; = sum n_accounts over 207 communities
+posting (account_url),9368,accounts whose post triggered an alert record; disjoint from coordinated set
+union coordinated+posting,24200,largest pool constructible from surviving link-alert data
+top-decile promoted from coordinated pool (URL-freq >= 90th pct),1602,90th-pct detection-frequency threshold = 10 distinct URLs
+published 'newly discovered accounts' (chapters),2126,live-cycle artifact (all three engines); NOT reproducible from link alerts alone
+old threshold-figure pool at 0th pct,19600,"matches union pool cumulative in early June 2024 (19,573 on 2024-06-02): old figure used a mid-deployment snapshot of the mixed population"

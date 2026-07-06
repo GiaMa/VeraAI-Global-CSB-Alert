@@ -1,0 +1,11 @@
+stage,value
+alert_records,10681
+incidence_rows_alert_level,102940
+bipartite_account_url_pairs,87017
+distinct_accounts,14832
+distinct_urls,8618
+projection_full_nodes,14832
+projection_full_edges,938664
+p95_weight_threshold,8
+projection_p95_nodes,1568
+projection_p95_edges,49431

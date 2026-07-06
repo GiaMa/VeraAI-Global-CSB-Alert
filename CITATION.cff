@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: "If you use the VERA-AI Alert software, please cite it using these metadata."
+title: "VERA-AI Alert: Self-updating detection of coordinated sharing behaviour on Facebook"
+abstract: >
+  VERA-AI Alert is a self-updating detection workflow for coordinated
+  sharing behaviour on Facebook. It wraps existing detection engines
+  (CLSB, CMSB, CITSB) inside a recursive monitoring loop that expands
+  the watched account list as new coordinated accounts are discovered.
+authors:
+  - family-names: "Giglietto"
+    given-names: "Fabio"
+    orcid: "https://orcid.org/0000-0001-8019-1035"
+  - family-names: "Marino"
+    given-names: "Giada"
+    orcid: "https://orcid.org/0000-0002-9087-2608"
+  - family-names: "Chakraborty"
+    given-names: "Anwesha"
+    # TODO: add ORCID (ambiguous in public registry)
+  - family-names: "Righetti"
+    given-names: "Nicola"
+    orcid: "https://orcid.org/0000-0002-9257-5113"
+type: software
+version: "1.0.0-working-paper"
+date-released: "YYYY-MM-DD"  # fill in at Zenodo release time
+license: "MIT"  # confirm against source project LICENSE
+repository-code: "https://github.com/GiaMa/VeraAI-Global-CSB-Alert"
+url: "https://github.com/GiaMa/VeraAI-Global-CSB-Alert"
+keywords:
+  - coordinated behaviour
+  - misinformation
+  - social network analysis
+  - Facebook
+  - computational communication
+  - continuous monitoring
+preferred-citation:
+  type: report
+  title: "Ten months of continuous coordinated-behaviour monitoring on Facebook: the VERA-AI Alert system, its empirical yield, and what retrospective case studies miss"
+  year: 2026
+  authors:
+    - family-names: "Giglietto"
+      given-names: "Fabio"
+    - family-names: "Marino"
+      given-names: "Giada"
+    - family-names: "Chakraborty"
+      given-names: "Anwesha"
+    - family-names: "Righetti"
+      given-names: "Nicola"
+  institution:
+    name: "SocArXiv"
+  notes: "Working paper. Add OSF preprint DOI once assigned."

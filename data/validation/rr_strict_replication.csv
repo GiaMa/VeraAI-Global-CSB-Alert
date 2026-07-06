@@ -1,0 +1,4 @@
+source,pct_threshold,weight_threshold,nodes,edges,louvain_communities,modularity,community_sizes
+reproduced,99,20,631,9732,19,0.603,169;164;70;59;54;27;24;11;10;7;6;5;5;4;4;4;3;3;2
+old_claimed,99,,633,7603,19,,
+rr_published,99,,743,16670,19,,
