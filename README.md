@@ -2,6 +2,9 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21225025.svg)](https://doi.org/10.5281/zenodo.21225025)
 
+> [!WARNING]
+> **Deprecated:** This implementation relies on the CrowdTangle API, which was shut down in August 2024. The pipeline is no longer operational in its original form. For an active implementation of similar methodology on TikTok, see: https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html
+
 A quasi-real-time monitoring workflow for detecting coordinated information operations on Facebook. This system cyclically monitors lists of known problematic actors to surface popular and potentially harmful content through automated alerting.
 
 ## Table of Contents
@@ -12,6 +15,7 @@ A quasi-real-time monitoring workflow for detecting coordinated information oper
 - [Outputs & Analyses](#outputs--analyses)
 - [Getting Started](#getting-started)
 - [Repository Structure](#repository-structure)
+- [Reproducing the working paper's results](#reproducing-the-working-papers-results)
 - [Citation](#citation)
 - [License](#license)
 
@@ -31,29 +35,19 @@ This repository documents the VERA-AI monitoring system, which:
 
 ### Research Context
 
-This system was developed as part of a research project examining deceptive information operations on Facebook. The theoretical framework integrates:
-
-- **Strategic information operations** (Starbird et al., 2019): Understanding how malicious actors exploit platform affordances
-- **Deception theory** (Chadwick & Stanyer, 2022): Analyzing communicative acts designed to mislead
-
-The workflow has been used to detect operations including pro-Putin propaganda networks, online gambling promotion schemes, and unmoderated groups flooded with explicit content.
-
-See [manuscripts/PAPERS.md](manuscripts/PAPERS.md) for detailed paper summaries.
+This system was developed as part of vera.ai (https://www.veraai.eu/), a Horizon Europe research project developing AI tools for fighting disinformation online. It implements a persistent, automated CSB monitoring system as advocated by Schroeder et al. (2026) for detecting, for example, AI-powered coordinated networks, which adapt their behaviour in real time and render retrospective detection insufficient. The workflow has been used to detect multiple types of deceptive information operations including pro-Putin propaganda networks, online gambling promotion schemes, and unmoderated groups flooded with explicit content.
 
 ### Quick Navigation
 
 | Audience | Start Here |
 |----------|------------|
-| **Researchers** | [manuscripts/PAPERS.md](manuscripts/PAPERS.md) - Academic papers and theoretical framework |
 | **Developers** | [R/README.md](R/README.md) - Code documentation and execution guide |
-| **Policy Analysts** | [docs/WORKFLOW.md](docs/WORKFLOW.md) - Conceptual workflow explanation |
 | **Data Users** | [data/README.md](data/README.md) - Dataset descriptions and data dictionary |
+| **Researchers** | [Reproducing the working paper's results](#reproducing-the-working-papers-results) - Scripts behind every numeric claim |
 
 ---
 
 ## Workflow
-
-*Detailed documentation: [docs/WORKFLOW.md](docs/WORKFLOW.md)*
 
 ### Monitoring Logic
 
@@ -84,10 +78,10 @@ Seed Lists (known problematic accounts)
          │
          ▼
 ┌─────────────────────────────┐
-│   Alert Generation         │
-│   • Slack notifications    │
-│   • Google Sheets logging  │
-│   • Network visualizations │
+│   Alert Generation          │
+│   • Slack notifications     │
+│   • Google Sheets logging   │
+│   • Network visualizations  │
 └─────────────────────────────┘
          │
          ▼
@@ -104,26 +98,22 @@ Seed Lists (known problematic accounts)
 | Edge weight percentile | 95th | Threshold for identifying highly coordinated accounts |
 | Minimum interactions | Dynamic | Calculated based on historical engagement patterns |
 
-See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
-
 ---
 
 ## Implementation
-
-*Detailed documentation: [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md)*
 
 ### System Architecture
 
 | Component | Script | Function |
 |-----------|--------|----------|
-| Orchestration | `R/main_pipeline.R` | Main entry point; coordinates all subsystems |
+| Orchestration | [R/main_pipeline.R](R/main_pipeline.R) | Main entry point; coordinates all subsystems |
 | CLSB Detection | CooRnet package | Coordinated Link Sharing Behavior detection |
-| CMSB Detection | `R/coordination_detection/detect_CMSB.R` | Coordinated Message Sharing Behavior |
-| CITSB Detection | `R/coordination_detection/detect_CITSB.R` | Coordinated Image-Text Sharing Behavior |
-| API Queries | `R/api/crowdtangle_query.R` | CrowdTangle API wrapper with rate limiting |
-| Network Labeling | `R/api/gpt4_labeling.R` | GPT-4 integration for cluster descriptions |
-| Threshold Calculation | `R/utils/get_threshold.R` | Dynamic engagement threshold computation |
-| URL Processing | `R/utils/clean_urls.R` | URL sanitization and normalization |
+| CMSB Detection | [R/coordination_detection/detect_CMSB.R](R/coordination_detection/detect_CMSB.R) | Coordinated Message Sharing Behavior |
+| CITSB Detection | [R/coordination_detection/detect_CITSB.R](R/coordination_detection/detect_CITSB.R) | Coordinated Image-Text Sharing Behavior |
+| API Queries | [R/api/crowdtangle_query.R](R/api/crowdtangle_query.R) | CrowdTangle API wrapper with rate limiting |
+| Network Labeling | [R/api/gpt4_labeling.R](R/api/gpt4_labeling.R) | GPT-4 integration for cluster descriptions |
+| Threshold Calculation | [R/utils/get_threshold.R](R/utils/get_threshold.R) | Dynamic engagement threshold computation |
+| URL Processing | [R/utils/clean_urls.R](R/utils/clean_urls.R) | URL sanitization and normalization |
 
 ### External Dependencies
 
@@ -135,7 +125,7 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 
 ### Known Limitations
 
-- CrowdTangle API was deprecated in August 2024; system now uses Meta Content Library
+- CrowdTangle API was deprecated in August 2024
 - Rate limiting constraints on API queries
 - GPT-4 labeling incurs API costs
 - Network analysis memory requirements scale with dataset size
@@ -144,29 +134,14 @@ See [docs/DEFINITIONS.md](docs/DEFINITIONS.md) for terminology definitions.
 
 ## Outputs & Analyses
 
-*Detailed documentation: [docs/OUTPUTS.md](docs/OUTPUTS.md)*
-
 ### Datasets
 
 | File | Description | Rows |
 |------|-------------|------|
-| `data/processed/community_engagement_classified.csv` | Processed dataset with engagement metrics and Claude LLM-derived classifications (geography, focus) | 208 |
-| `data/alerts/veraai_alerts_links.csv` | Original alert dataset - raw output from the monitoring workflow | 14,244 |
+| [data/processed/community_engagement_classified.csv](data/processed/community_engagement_classified.csv) | Processed dataset with engagement metrics and LLM-derived classifications (geography, focus) | 208 |
+| [data/alerts/veraai_alerts_links.csv](data/alerts/veraai_alerts_links.csv) | Original alert dataset - raw output from the monitoring workflow | 14,244 |
 
-### Preliminary Analyses
-
-The monitoring system identified **17 distinct networks** pursuing varied operational objectives:
-
-- **Pro-Putin propaganda**: 27 coordinated groups with synchronized posting
-- **Online gambling promotion**: 260 groups using AI-generated content and bot engagement
-- **Unmoderated spam networks**: 222 groups exploiting poor moderation for explicit content
-
-Key findings include:
-- Coordinated posts achieving over 1 million views
-- AI-generated imagery used for engagement bait
-- Strategic group renaming to evade detection
-
-See [docs/ALERTS.md](docs/ALERTS.md) for alert interpretation guidance.
+The classified dataset includes two LLM-derived dimensions for each detected community: **geographic region** (9 categories: North America, Latin America, Europe, Eastern Europe/Russia, Africa, South Asia, Southeast Asia, Asia-Pacific, Other/Mixed) and **operational focus** (11 categories: political movements, online gambling, news/media, entertainment, local community groups, religious, e-commerce, cryptocurrency, diaspora, pet communities, other).
 
 ---
 
@@ -220,17 +195,9 @@ For scheduled execution, configure a cron job to run the pipeline every 6 hours.
 ```
 vera-ai-monitoring/
 ├── README.md                     # This file
+├── CITATION.cff                  # Software citation metadata
+├── renv.lock                     # Pinned R package versions (renv)
 ├── .gitignore                    # Git ignore rules
-│
-├── docs/                         # Documentation
-│   ├── WORKFLOW.md               # Conceptual workflow explanation
-│   ├── IMPLEMENTATION.md         # Technical architecture details
-│   ├── OUTPUTS.md                # Dataset and analysis guide
-│   ├── DEFINITIONS.md            # Key terminology
-│   └── ALERTS.md                 # Alert system documentation
-│
-├── manuscripts/                  # Academic papers
-│   └── PAPERS.md                 # Related publications and references
 │
 ├── R/                            # Analysis code
 │   ├── main_pipeline.R           # Main orchestration script
@@ -246,14 +213,15 @@ vera-ai-monitoring/
 │       ├── clean_urls.R
 │       └── get_threshold.R
 │
+├── analysis/                     # Working-paper analyses
+│   ├── validation/               # Scripts reproducing every numeric claim
+│   └── figures/                  # Paper figures (PDF)
+│
 ├── data/                         # Data assets
 │   ├── README.md                 # Data dictionary
 │   ├── processed/                # Analysis-ready datasets
-│   └── alerts/                   # Alert outputs
-│
-├── analysis/                     # Preliminary analyses
-│   ├── figures/                  # Visualizations
-│   └── notebooks/                # Analysis notebooks
+│   ├── alerts/                   # Alert outputs
+│   └── validation/               # Validation outputs (CSV + RDS permutation draws)
 │
 └── config/                       # Configuration templates
     └── config_template.R
@@ -300,29 +268,24 @@ list and the live discovery queue are not shared; the paper documents the
 schema and the promotion rule so the pipeline can be re-deployed on other
 data.
 
+---
+
 ## Citation
 
 To cite the system and its empirical yield, cite the working paper above
-(see also `CITATION.cff`). The upstream detection methodology:
+(see also [CITATION.cff](CITATION.cff)). The upstream detection methodology:
 
 > Giglietto, F., Marino, G., Mincigrucci, R., & Stanziano, A. (2023). A Workflow to Detect, Monitor, and Update Lists of Coordinated Social Media Accounts Across Time: The Case of the 2022 Italian Election. *Social Media + Society*, 9(3). https://doi.org/10.1177/20563051231196866
 
 > Giglietto, F., Righetti, N., Rossi, L., & Marino, G. (2020). It takes a village to manipulate the media: coordinated link sharing behavior during 2018 and 2019 Italian elections. *Information, Communication & Society*, 23(6), 867-891.
+
+> Schroeder, D. T., Cha, M., Baronchelli, A., Bostrom, N., Christakis, N. A., Garcia, D., Goldenberg, A., Kyrychenko, Y., Leyton-Brown, K., Lutz, N., Marcus, G., Menczer, F., Pennycook, G., Rand, D. G., Ressa, M., Schweitzer, F., Song, D., Summerfield, C., Tang, A., … Kunst, J. R. (2026). How malicious AI swarms can threaten democracy. *Science (New York, N.Y.)*, 391(6783), 354–357. https://doi.org/10.1126/science.adz1697
 
 ---
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Implementation Status
-
-**Note:** This implementation is deprecated following the CrowdTangle API closure in August 2024.
-
-For an active implementation of similar coordinated behavior detection methodology on TikTok, see Fabio Giglietto's project:
-- **TikTok Coordinated Sharing Behavior Detection**: https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html
 
 ---
 

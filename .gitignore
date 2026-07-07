@@ -52,3 +52,9 @@ data/processed/facebook_network_nodes.csv
 
 # Plan file (development only)
 PLAN.md
+
+# Manuscripts under review
+manuscripts/*.docx
+manuscripts/*.md
+*.docx
+paper_structure_improvements.pdf
