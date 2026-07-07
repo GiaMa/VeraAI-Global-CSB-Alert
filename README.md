@@ -1,6 +1,6 @@
 # VERA-AI: Coordinated Behavior Monitoring System
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21225025.svg)](https://doi.org/10.5281/zenodo.21225025)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21225024.svg)](https://doi.org/10.5281/zenodo.21225024)
 
 > [!WARNING]
 > **Deprecated:** This implementation relies on the CrowdTangle API, which was shut down in August 2024. The pipeline is no longer operational in its original form. For an active implementation of similar methodology on TikTok, see: https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html
@@ -237,7 +237,7 @@ This repository is the companion to the working paper:
 > months of continuous coordinated-behaviour monitoring on Facebook: the
 > VERA-AI Alert system, its empirical yield, and what retrospective case
 > studies miss.* SocArXiv working paper. (OSF DOI to be added on publication;
-> Zenodo archive of this repository: <https://doi.org/10.5281/zenodo.21225025>.)
+> Zenodo archive of this repository: <https://doi.org/10.5281/zenodo.21225024> (all versions).)
 
 Every numeric claim in the paper traces to a script under
 `analysis/validation/` (seeds recorded in each script) reading the data in

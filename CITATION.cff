@@ -20,10 +20,10 @@ authors:
     given-names: "Nicola"
     orcid: "https://orcid.org/0000-0002-9257-5113"
 type: software
-version: "1.0-working-paper"
-date-released: "2026-07-06"
-doi: "10.5281/zenodo.21225025"
-license: "MIT"  # confirm against source project LICENSE
+version: "1.0.1-working-paper"
+date-released: "2026-07-07"
+doi: "10.5281/zenodo.21234935"
+license: "MIT"
 repository-code: "https://github.com/GiaMa/VeraAI-Global-CSB-Alert"
 url: "https://github.com/GiaMa/VeraAI-Global-CSB-Alert"
 keywords:
