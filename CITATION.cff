@@ -20,8 +20,9 @@ authors:
     given-names: "Nicola"
     orcid: "https://orcid.org/0000-0002-9257-5113"
 type: software
-version: "1.0.0-working-paper"
-date-released: "YYYY-MM-DD"  # fill in at Zenodo release time
+version: "1.0-working-paper"
+date-released: "2026-07-06"
+doi: "10.5281/zenodo.21225025"
 license: "MIT"  # confirm against source project LICENSE
 repository-code: "https://github.com/GiaMa/VeraAI-Global-CSB-Alert"
 url: "https://github.com/GiaMa/VeraAI-Global-CSB-Alert"

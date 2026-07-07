@@ -1,5 +1,7 @@
 # VERA-AI: Coordinated Behavior Monitoring System
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21225025.svg)](https://doi.org/10.5281/zenodo.21225025)
+
 A quasi-real-time monitoring workflow for detecting coordinated information operations on Facebook. This system cyclically monitors lists of known problematic actors to surface popular and potentially harmful content through automated alerting.
 
 ## Table of Contents
@@ -266,8 +268,8 @@ This repository is the companion to the working paper:
 > Giglietto, F., Marino, G., Chakraborty, A., & Righetti, N. (2026). *Ten
 > months of continuous coordinated-behaviour monitoring on Facebook: the
 > VERA-AI Alert system, its empirical yield, and what retrospective case
-> studies miss.* SocArXiv working paper. (DOI to be added on publication;
-> Zenodo archive of this repository: DOI to be added at release.)
+> studies miss.* SocArXiv working paper. (OSF DOI to be added on publication;
+> Zenodo archive of this repository: <https://doi.org/10.5281/zenodo.21225025>.)
 
 Every numeric claim in the paper traces to a script under
 `analysis/validation/` (seeds recorded in each script) reading the data in
