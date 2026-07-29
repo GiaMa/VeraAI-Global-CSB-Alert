@@ -1,0 +1,16 @@
+metric,value
+rows_in_file,38099
+rows_missing_url,316
+duplicate_url_rows,1936
+unique_urls_dated,36092
+published_figure,36091
+distinct_domains,12130
+platform_hosted,6364
+platform_hosted_pct,17.6
+codeable_slug,27998
+codeable_slug_pct,77.6
+top100_domain_coverage_pct,31.7
+year_min,2011
+year_median,2020
+year_max,2022
+year_mode,2020

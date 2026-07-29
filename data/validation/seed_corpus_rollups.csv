@@ -1,0 +1,6 @@
+rollup,categories,n,pct,lo,hi
+political_or_news,politics+crime_society,331,33.1,30.3,36.1
+health,health,242,24.2,21.6,27
+discovered_not_inherited,entertainment_celebrity+pets_animals,49,4.9,3.7,6.4
+content_overlap,commerce_scam+gambling,60,6,4.7,7.6
+unclassifiable,unclassifiable,257,25.7,23.1,28.5

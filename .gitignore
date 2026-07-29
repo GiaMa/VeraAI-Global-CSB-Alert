@@ -58,3 +58,20 @@ manuscripts/*.docx
 manuscripts/*.md
 *.docx
 paper_structure_improvements.pdf
+
+# Seed fact-check corpus — NOT REDISTRIBUTABLE.
+# The URLs derive from the Facebook Privacy-Protected Full URLs Data Set
+# (Messing et al. 2020); the Data Sharing Agreement signed to obtain it
+# forbids sharing the URL-level rows. Everything under data/private/ stays
+# local: the corpus itself and the URL-bearing coding sample. Only
+# non-identifying derivatives (label file keyed by sample_id, aggregate
+# profile tables) may be released.
+data/private/
+
+# Seed watched list (1,225 accounts) from the 2023 CooRnet run — the paper
+# states the account-level watched list is not released. Only the aggregate
+# overlap counts in data/validation/seed_community_overlap*.csv may ship.
+highly_connected_coordinated_entities*.csv
+cluster_summary*.csv
+component_summary*.csv
+*.graphml
