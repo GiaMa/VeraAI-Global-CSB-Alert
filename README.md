@@ -1,6 +1,6 @@
 # VERA-AI: Coordinated Behavior Monitoring System
 
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21675906-blue)](https://doi.org/10.5281/zenodo.21675906)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21225024-blue)](https://doi.org/10.5281/zenodo.21225024)
 
 > [!WARNING]
 > **Deprecated:** This implementation relies on the CrowdTangle API, which was shut down in August 2024. The pipeline is no longer operational in its original form. For an active implementation of similar methodology on TikTok, see: https://fabiogiglietto.github.io/tiktok_csbn/tt_viz.html
