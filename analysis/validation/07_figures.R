@@ -8,8 +8,11 @@
 #
 # Known defects of the old figures fixed here:
 #  - expansion_monthly_detections: population now explicitly the 14,832
-#    coordinated accounts (the old figure mixed populations, ~19.6k).
-#  - threshold_sensitivity: true numeric x-axis (percentiles to scale).
+#    coordinated accounts (the old figure plotted all accounts in alert
+#    records incl. non-coordinated sharers, ~19.6k–20,450).
+#  - threshold_sensitivity: true numeric x-axis (percentiles to scale);
+#    candidate pool corrected to coordinated accounts only (the earlier
+#    24,200 union pool was a parsing artifact — see 04).
 #  - null_model_modularity_histogram: annotation box kept inside the panel.
 #  - rr_strict_replication_network: real network plot (was a histogram).
 #
@@ -110,28 +113,25 @@ pA <- ggplot(sens, aes(percentile, n_promoted)) +
   geom_point(colour = okabe[1], size = 2) +
   annotate("text", x = 90, y = max(sens$n_promoted), label = "deployed (90th)",
            hjust = 1.05, vjust = 1, size = 3, colour = "grey30") +
-  scale_y_log10(labels = scales::comma) +
+  geom_text(aes(label = scales::percent(share_promoted, accuracy = 0.1)),
+            vjust = -0.9, size = 2.6, colour = "grey30") +
+  scale_y_log10(labels = scales::comma,
+                expand = expansion(mult = c(0.05, 0.12))) +
   scale_x_continuous(breaks = c(0, 25, 50, 75, 90, 99)) +
   labs(title = "Accounts promoted vs. threshold percentile",
-       subtitle = "Candidate pool: 24,200 accounts in alerts (coordinated + posting);\nlog scale",
+       subtitle = "Candidate pool: 14,832 coordinated accounts (mere sharers of an\nalerted URL were never promotion candidates); log scale",
        x = "Detection-frequency percentile threshold", y = "Accounts promoted") + thm
 
-sensB <- melt(sens[, .(percentile, coverage_of_14832, overlap_with_graph)],
-              id.vars = "percentile")
-sensB[, variable := fifelse(variable == "coverage_of_14832",
-                            "Coverage (of 14,832)", "Overlap (promoted in graph)")]
-
-pB <- ggplot(sensB, aes(percentile, value, colour = variable)) +
+pB <- ggplot(sens, aes(percentile, freq_threshold)) +
   geom_vline(xintercept = 90, linetype = "dashed", colour = "grey45") +
-  geom_line(linewidth = 0.7) +
-  geom_point(size = 2) +
-  scale_colour_manual(values = okabe[1:2], name = NULL) +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(0, 1)) +
+  geom_step(colour = okabe[2], linewidth = 0.7) +
+  geom_point(colour = okabe[2], size = 2) +
+  scale_y_log10(breaks = c(1, 2, 5, 10, 25, 50, 100)) +
   scale_x_continuous(breaks = c(0, 25, 50, 75, 90, 99)) +
-  labs(title = "Coverage and overlap vs. threshold percentile",
-       subtitle = "Coverage: share of community-graph accounts promoted.\nOverlap: share of promoted accounts in the community graph",
-       x = "Detection-frequency percentile threshold", y = NULL) +
-  thm + theme(legend.position = "bottom", legend.text = element_text(size = 8))
+  labs(title = "Implied detection-frequency threshold",
+       subtitle = "Distinct alert URLs required for promotion at each percentile;\nthe deployed 90th percentile requires 10. Log scale",
+       x = "Detection-frequency percentile threshold",
+       y = "Distinct alert URLs required") + thm
 
 two_panel_pdf(file.path(fig_dir, "threshold_sensitivity.pdf"), pA, pB, width = 10, height = 4.4)
 

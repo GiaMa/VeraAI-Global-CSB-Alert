@@ -10,19 +10,27 @@
 #
 # POPULATION DEFINITIONS (the paper must distinguish these precisely)
 # -------------------------------------------------------------------
-# coord      : distinct values of `coo_r_account_url` (accounts CooRnet
+# coord      : distinct entries of `coo_r_account_url` (accounts CooRnet
 #              flagged as coordinated in an alert). Total = 14,832. This is
 #              the node set of the co-sharing graph / 207-community catalogue.
-# posting    : distinct values of `account_url` (the account whose post
-#              triggered the alert record). Total = 9,368. Disjoint from
-#              `coord` in this dataset.
-# union      : coord OR posting. Total = 24,200 at end of deployment.
-#              The ~19.6k plotted at the 0th percentile of the OLD
-#              threshold-sensitivity figure equals this union pool as of
-#              early June 2024 (cumulative union = 19,573 on 2024-06-02,
-#              19,642 on 2024-06-03): the old figure was evidently produced
-#              from a MID-DEPLOYMENT snapshot of the mixed
-#              coordinated+posting population, not from the final archive.
+# posting    : distinct entries of `account_url` — like `coo_r_account_url`
+#              this is a COMMA-SEPARATED LIST (all accounts sharing the
+#              alerted URL) and MUST be split. Total = 20,450 accounts, a
+#              strict SUPERSET of `coord` (every coordinated account also
+#              appears here; 5,618 accounts appear only as sharers).
+# union      : coord OR posting = posting = 20,450 at end of deployment.
+#              WARNING: an earlier revision took `account_url` unsplit
+#              (9,368 distinct list-strings, trivially "disjoint" from
+#              coord because a comma-joined list never equals a single
+#              URL) and reported union = 24,200. That figure is a parsing
+#              artifact — never reuse it. The ~19.6k at the 0th percentile
+#              of the OLD threshold-sensitivity figure is close to the
+#              corrected 20,450 (and to no other constructible pool), so
+#              the old figure most plausibly plotted the properly split
+#              population; the exact value remains unreproduced.
+#              NOTE: posting-only accounts were NEVER promotion candidates
+#              (the live rule only considered CooRnet-flagged coordinated
+#              accounts); the posting/union series are descriptive only.
 #
 # PROMOTION RECONSTRUCTION
 # ------------------------
@@ -53,7 +61,12 @@ month_of <- function(d) format(d, "%Y-%m")
 
 # ---- First-seen month per population ----------------------------------------
 first_coord <- incidence[, .(first = min(alert_date)), by = acct]
-first_post  <- alerts[, .(first = min(alert_date)), by = .(acct = trimws(account_url))]
+
+post_splits <- strsplit(alerts$account_url, ",", fixed = TRUE)
+post_long   <- data.table(acct       = trimws(unlist(post_splits)),
+                          alert_date = rep(alerts$alert_date, lengths(post_splits)))
+first_post  <- post_long[acct != "", .(first = min(alert_date)), by = acct]
+
 first_union <- rbind(first_coord, first_post)[, .(first = min(first)), by = acct]
 
 monthly_new <- function(fs) {
@@ -108,20 +121,23 @@ thr90_full <- quantile(freq_full$n_urls, 0.90, type = 7)
 top_decile_promoted <- sum(freq_full$n_urls >= thr90_full)
 
 pops <- data.table(
-  population = c("coordinated (coo_r_account_url)",
-                 "posting (account_url)",
+  population = c("coordinated (coo_r_account_url, split)",
+                 "posting (account_url, split)",
                  "union coordinated+posting",
+                 "posting-only (never flagged as coordinated)",
                  "top-decile promoted from coordinated pool (URL-freq >= 90th pct)",
                  "published 'newly discovered accounts' (chapters)",
                  "old threshold-figure pool at 0th pct"),
   n     = c(nrow(first_coord), nrow(first_post), nrow(first_union),
+            nrow(first_union) - nrow(first_coord),
             top_decile_promoted, 2126, 19600),
   note  = c("nodes of co-sharing graph; = sum n_accounts over 207 communities",
-            "accounts whose post triggered an alert record; disjoint from coordinated set",
-            "largest pool constructible from surviving link-alert data",
+            "all accounts listed as sharers of an alerted URL; SUPERSET of the coordinated set",
+            "= posting set (coordinated is a strict subset); the earlier 24,200 came from not splitting account_url and is a parsing artifact",
+            "descriptive only: mere sharers were never promotion candidates",
             sprintf("90th-pct detection-frequency threshold = %d distinct URLs", as.integer(thr90_full)),
             "live-cycle artifact (all three engines); NOT reproducible from link alerts alone",
-            "matches union pool cumulative in early June 2024 (19,573 on 2024-06-02): old figure used a mid-deployment snapshot of the mixed population")
+            "closest constructible pool is the corrected union (20,450); exact value unreproduced")
 )
 fwrite(pops, "data/validation/expansion_populations.csv")
 print(pops)

@@ -20,9 +20,14 @@
 # "Coordinated account" = an entry of the comma-separated `coo_r_account_url`
 # field of an alert record (the accounts CooRnet flagged as coordinated
 # around that URL). This is DISTINCT from `account_url` (the account whose
-# post triggered the alert row); the two populations are disjoint in this
-# dataset (coordinated accounts are ~96% Facebook groups, posting accounts
-# are pages/profiles).
+# post triggered the alert row).
+#
+# CORRECTION (see 01_expansion_dynamics.R, POPULATION DEFINITIONS): an
+# earlier revision of this header claimed the two populations are disjoint.
+# They are not. That reading came from treating `account_url` as a single
+# value when it is itself a comma-separated LIST; split properly, the posting
+# population (20,450) is a strict SUPERSET of the coordinated one (14,832).
+# Do not reuse the disjointness claim.
 #
 # The bipartite incidence is DEDUPLICATED at (account, URL) level: an account
 # that co-shared the same URL in several alerts contributes a single 1.
