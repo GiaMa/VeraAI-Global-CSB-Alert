@@ -209,8 +209,20 @@ cat("\n=== one-hop seed contact (co-shared >=1 alerted URL with a seed account) 
 print(onehop)
 cat("\nalerted URLs co-shared by >=1 seed account:", length(seed_urls_touched),
     "of", uniqueN(inc$url), "\n")
-cat("\n=== entertainment communities by one-hop contact (top 5) ===\n")
-print(head(memb[primary_focus == "Entertainment/Fan communities",
-                .(accounts = .N, seed = sum(is_seed),
-                  one_hop_pct = round(100 * mean(one_hop), 1)),
-                by = .(source_community, label)][order(-one_hop_pct)], 5))
+# Per-community one-hop, ALL 207 communities. Printing only the top 5 by
+# percentage (as this script used to) hides the head of each category: the
+# largest entertainment community (1,665 accounts) sits at 0.1%, so it never
+# appeared in a top-5-by-pct listing and its figure went unrecorded anywhere.
+# The paper cites per-community one-hop values, so they ship as an aggregate
+# artefact. Same disclosure level as seed_community_overlap.csv — community
+# id, label, category and counts only, no account identifiers.
+per_comm_hop <- memb[, .(accounts = .N,
+                         seed_accounts = sum(is_seed),
+                         one_hop_accounts = sum(one_hop),
+                         one_hop_pct = round(100 * mean(one_hop), 1)),
+                     by = .(source_community, label, primary_focus)]
+setorder(per_comm_hop, -accounts)
+fwrite(per_comm_hop, file.path(OUT, "seed_one_hop_by_community.csv"))
+
+cat("\n=== entertainment communities by one-hop contact (all, largest first) ===\n")
+print(per_comm_hop[primary_focus == "Entertainment/Fan communities"], nrows = 100)

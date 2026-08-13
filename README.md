@@ -247,7 +247,7 @@ Every numeric claim in the paper traces to a script under
 |---|---|---|
 | Graph construction (14,832 discovered accounts; 8,618 URLs) | `data/validation/graph_summary.csv` | `analysis/validation/00_build_graphs.R` |
 | Expansion dynamics; monthly promotion rate mean 11.1%, CV 0.10 | `expansion_dynamics.csv` | `01_expansion_dynamics.R` |
-| Bipartite null model (modularity 0.668 vs 0.067; p ≤ 0.001 on 4/5 metrics; 1,000 Curveball permutations) | `null_model_pvalues.csv` | `02_null_model_bipartite.R` + `curveball.cpp` |
+| Bipartite null model (modularity 0.668 vs 0.067; p ≤ 0.001 on all 5 metrics — 4 in the expected direction, largest component in the lower tail; 1,000 Curveball permutations) | `null_model_pvalues.csv` | `02_null_model_bipartite.R` + `curveball.cpp` |
 | Temporal (weekly-stratified) null | `null_model_temporal.csv` | `03_null_model_temporal.R` |
 | Threshold sensitivity (1,602 promoted at 90th pct of 14,832) | `threshold_sensitivity.csv` | `04_threshold_sensitivity.R` |
 | Rogers & Righetti strict replication (631 nodes / 9,732 edges / 19 communities → 15 catalogue communities) | `rr_strict_replication.csv`, `rr_strict_communities.csv` | `05_rr_strict_replication.R` |
